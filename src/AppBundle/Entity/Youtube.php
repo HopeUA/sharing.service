@@ -16,7 +16,7 @@ class Youtube
      */
     protected $id;
     /**
-     * @ORM\OneToOne(targetEntity="SharedVideo")
+     * @ORM\OneToOne(targetEntity="Episode")
      */
     protected $video;
     /**
@@ -68,10 +68,10 @@ class Youtube
     /**
      * Set video
      *
-     * @param \AppBundle\Entity\SharedVideo $video
+     * @param \AppBundle\Entity\Episode $video
      * @return Youtube
      */
-    public function setVideo(\AppBundle\Entity\SharedVideo $video = null)
+    public function setVideo(\AppBundle\Entity\Episode $video = null)
     {
         $this->video = $video;
     
@@ -81,7 +81,7 @@ class Youtube
     /**
      * Get video
      *
-     * @return \AppBundle\Entity\SharedVideo
+     * @return \AppBundle\Entity\Episode
      */
     public function getVideo()
     {

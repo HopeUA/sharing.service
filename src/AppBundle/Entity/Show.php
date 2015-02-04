@@ -6,10 +6,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Entity\SharedProgramRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\ShowRepository")
  * @ORM\Table(name="shared_program", uniqueConstraints={@UniqueConstraint(name="code_idx", columns={"code"})})
  */
-class SharedProgram
+class Show
 {
     /**
      * @ORM\Column(type="integer")
@@ -26,7 +26,7 @@ class SharedProgram
      */
     protected $title;
     /**
-     * @ORM\OneToMany(targetEntity="SharedVideo", mappedBy="program")
+     * @ORM\OneToMany(targetEntity="Episode", mappedBy="program")
      */
     protected $videos;
 
@@ -49,7 +49,7 @@ class SharedProgram
      * Set code
      *
      * @param string $code
-     * @return SharedProgram
+     * @return Show
      */
     public function setCode($code)
     {
@@ -72,7 +72,7 @@ class SharedProgram
      * Set title
      *
      * @param string $title
-     * @return SharedProgram
+     * @return Show
      */
     public function setTitle($title)
     {
@@ -94,10 +94,10 @@ class SharedProgram
     /**
      * Add videos
      *
-     * @param \AppBundle\Entity\SharedVideo $videos
-     * @return SharedProgram
+     * @param \AppBundle\Entity\Episode $videos
+     * @return Show
      */
-    public function addVideo(\AppBundle\Entity\SharedVideo $videos)
+    public function addVideo(\AppBundle\Entity\Episode $videos)
     {
         $this->videos[] = $videos;
     
@@ -107,9 +107,9 @@ class SharedProgram
     /**
      * Remove videos
      *
-     * @param \AppBundle\Entity\SharedVideo $videos
+     * @param \AppBundle\Entity\Episode $videos
      */
-    public function removeVideo(\AppBundle\Entity\SharedVideo $videos)
+    public function removeVideo(\AppBundle\Entity\Episode $videos)
     {
         $this->videos->removeElement($videos);
     }

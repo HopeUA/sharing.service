@@ -16,7 +16,7 @@ class YoutubeRepository extends EntityRepository
     {
         $query = $this->getEntityManager()
                       ->createQuery(
-                       'SELECT y, v FROM HopeMqBundle:Youtube y
+                       'SELECT y, v FROM AppBundle:Youtube y
                          JOIN y.video v
                          WHERE v.publish <= :now
                            AND y.published = 0
@@ -31,7 +31,7 @@ class YoutubeRepository extends EntityRepository
     {
         $query = $this->getEntityManager()
                       ->createQuery(
-                       'SELECT y, v FROM HopeMqBundle:Youtube y
+                       'SELECT y, v FROM AppBundle:Youtube y
                          JOIN y.video v
                          WHERE (v.publish > :now OR v.trash = 1)
                            AND y.published = 1')

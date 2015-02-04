@@ -5,11 +5,11 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Entity\SharedVideoRepository")
- * @ORM\EntityListeners({"AppBundle\Entity\SharedVideoListener"})
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\EpisodeRepository")
+ * @ORM\EntityListeners({"AppBundle\Entity\EpisodeListener"})
  * @ORM\Table(name="shared_video", uniqueConstraints={@UniqueConstraint(name="code_idx", columns={"code"})})
  */
-class SharedVideo
+class Episode
 {
     /**
      * @ORM\Column(type="integer")
@@ -22,7 +22,7 @@ class SharedVideo
      */
     protected $code;
     /**
-     * @ORM\ManyToOne(targetEntity="SharedProgram", inversedBy="videos")
+     * @ORM\ManyToOne(targetEntity="Show", inversedBy="videos")
      * @ORM\JoinColumn(name="program", referencedColumnName="id")
      */
     protected $program;
@@ -86,7 +86,7 @@ class SharedVideo
      * Set code
      *
      * @param string $code
-     * @return SharedVideo
+     * @return Episode
      */
     public function setCode($code)
     {
@@ -109,7 +109,7 @@ class SharedVideo
      * Set title
      *
      * @param string $title
-     * @return SharedVideo
+     * @return Episode
      */
     public function setTitle($title)
     {
@@ -132,7 +132,7 @@ class SharedVideo
      * Set desc
      *
      * @param string $desc
-     * @return SharedVideo
+     * @return Episode
      */
     public function setDesc($desc)
     {
@@ -155,7 +155,7 @@ class SharedVideo
      * Set tags
      *
      * @param string $tags
-     * @return SharedVideo
+     * @return Episode
      */
     public function setTags($tags)
     {
@@ -178,7 +178,7 @@ class SharedVideo
      * Set publish
      *
      * @param \DateTime $publish
-     * @return SharedVideo
+     * @return Episode
      */
     public function setPublish($publish)
     {
@@ -201,7 +201,7 @@ class SharedVideo
      * Set duration
      *
      * @param integer $duration
-     * @return SharedVideo
+     * @return Episode
      */
     public function setDuration($duration)
     {
@@ -224,7 +224,7 @@ class SharedVideo
      * Set hd
      *
      * @param integer $hd
-     * @return SharedVideo
+     * @return Episode
      */
     public function setHd($hd)
     {
@@ -247,7 +247,7 @@ class SharedVideo
      * Set youtube
      *
      * @param \AppBundle\Entity\Youtube $youtube
-     * @return SharedVideo
+     * @return Episode
      */
     public function setYoutube(\AppBundle\Entity\Youtube $youtube = null)
     {
@@ -269,10 +269,10 @@ class SharedVideo
     /**
      * Set program
      *
-     * @param \AppBundle\Entity\SharedProgram $program
-     * @return SharedVideo
+     * @param \AppBundle\Entity\Show $program
+     * @return Episode
      */
-    public function setProgram(\AppBundle\Entity\SharedProgram $program = null)
+    public function setProgram(\AppBundle\Entity\Show $program = null)
     {
         $this->program = $program;
     
@@ -282,7 +282,7 @@ class SharedVideo
     /**
      * Get program
      *
-     * @return \AppBundle\Entity\SharedProgram
+     * @return \AppBundle\Entity\Show
      */
     public function getProgram()
     {
@@ -293,7 +293,7 @@ class SharedVideo
      * Set trash
      *
      * @param integer $trash
-     * @return SharedVideo
+     * @return Episode
      */
     public function setTrash($trash)
     {
