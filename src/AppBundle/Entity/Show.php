@@ -3,11 +3,13 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping\UniqueConstraint;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Entity\ShowRepository")
- * @ORM\Table(name="shared_program", uniqueConstraints={@UniqueConstraint(name="code_idx", columns={"code"})})
+ * @ORM\Table(name="shared_program", uniqueConstraints={@ORM\UniqueConstraint(name="code_idx", columns={"code"})})
+ *
+ * @Serializer\ExclusionPolicy("all")
  */
 class Show
 {
@@ -19,10 +21,14 @@ class Show
     protected $id;
     /**
      * @ORM\Column(type="string", length=4)
+     *
+     * @Serializer\Expose()
      */
     protected $code;
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @Serializer\Expose()
      */
     protected $title;
     /**

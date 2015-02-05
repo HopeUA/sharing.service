@@ -13,23 +13,31 @@ use Doctrine\Orm\NoResultException;
  */
 class ShowRepository extends EntityRepository
 {
-    public function getByCode($code, $createNew = false)
+    /**
+     * @return Show[]
+     */
+    public function getAll()
     {
-        $query = $this->getEntityManager()
-                      ->createQuery(
-                       'SELECT p FROM AppBundle:Show p
-                         WHERE p.code = :code')
-                      ->setMaxResults(1)
-                      ->setParameter('code', $code);
         /**
-         * @var \AppBundle\Entity\Show $program
+         * @var \AppBundle\Entity\Show[] $shows
          */
-        try {
-            $program = $query->getSingleResult();
-        } catch(NoResultException $e) {
-            $program = $createNew ? new Show() : null;
-        }
+        $shows = $this->findBy([], null, 10);
 
-        return $program;
+        return $shows;
+    }
+
+    /**
+     * @param $code
+     *
+     * @return Show
+     */
+    public function getOne($code)
+    {
+        /**
+         * @var \AppBundle\Entity\Show $show
+         */
+        $show = $this->findOneBy(['code' => $code]);
+
+        return $show;
     }
 }

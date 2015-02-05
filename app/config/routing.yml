@@ -5,3 +5,6 @@ app:
 episodes:
     type: rest
     resource: AppBundle\Controller\EpisodesController
+shows:
+    type: rest
+    resource: AppBundle\Controller\ShowsController

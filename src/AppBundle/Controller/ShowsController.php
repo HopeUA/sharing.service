@@ -8,12 +8,12 @@ use FOS\RestBundle\Controller\Annotations\View;
 /**
  * Class EpisodesController
  */
-class EpisodesController extends Controller
+class ShowsController extends Controller
 {
 	/**
-	 * @var \AppBundle\Entity\EpisodeRepository
+	 * @var \AppBundle\Entity\ShowRepository
 	 */
-	private $episodeRepo;
+	private $showRepo;
 
 	public function setContainer(ContainerInterface $container = null)
     {
@@ -23,18 +23,18 @@ class EpisodesController extends Controller
 
 	public function init()
 	{
-		$this->episodeRepo = $this->getDoctrine()->getRepository('AppBundle:Episode');
+		$this->showRepo = $this->getDoctrine()->getRepository('AppBundle:Show');
 	}
 
 	/**
 	 * @return array
 	 * @View()
 	 */
-	public function getEpisodesAction()
+	public function getShowsAction()
 	{
-		$episodes = $this->episodeRepo->getAll();
+		$shows = $this->showRepo->getAll();
 
-		return ['episodes' => $episodes];
+		return ['shows' => $shows];
 	}
 
 	/**
@@ -44,10 +44,10 @@ class EpisodesController extends Controller
 	 *
 	 * @View()
 	 */
-	public function getEpisodeAction($code)
+	public function getShowAction($code)
 	{
-		$episode = $this->episodeRepo->getOne($code);
+		$show = $this->showRepo->getOne($code);
 
-		return $episode;
+		return $show;
 	}
 }
