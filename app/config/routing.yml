@@ -1,3 +1,7 @@
 app:
     resource: @AppBundle/Controller/
     type:     annotation
+
+episodes:
+    type: rest
+    resource: AppBundle\Controller\EpisodesController

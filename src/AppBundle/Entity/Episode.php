@@ -2,12 +2,13 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\UniqueConstraint;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Entity\EpisodeRepository")
- * @ORM\EntityListeners({"AppBundle\Entity\EpisodeListener"})
- * @ORM\Table(name="shared_video", uniqueConstraints={@UniqueConstraint(name="code_idx", columns={"code"})})
+ * @ORM\Table(name="shared_video", uniqueConstraints={@ORM\UniqueConstraint(name="code_idx", columns={"code"})})
+ *
+ * @Serializer\ExclusionPolicy("all")
  */
 class Episode
 {
@@ -19,23 +20,33 @@ class Episode
     protected $id;
     /**
      * @ORM\Column(type="string", length=9)
+     *
+     * @Serializer\Expose()
      */
     protected $code;
     /**
      * @ORM\ManyToOne(targetEntity="Show", inversedBy="videos")
      * @ORM\JoinColumn(name="program", referencedColumnName="id")
+     *
      */
     protected $program;
+
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @Serializer\Expose()
      */
     protected $title;
     /**
      * @ORM\Column(type="text", name="`desc`")
+     *
+     * @Serializer\Expose()
      */
     protected $desc;
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="simple_array")
+     *
+     * @Serializer\Expose()
      */
     protected $tags = '';
     /**
@@ -71,6 +82,11 @@ class Episode
      * @var string
      */
     protected $status;
+
+    /**
+     * @Serializer\Expose()
+     */
+    protected $media;
 
     /**
      * Get id
@@ -326,5 +342,30 @@ class Episode
     public function getStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMedia()
+    {
+        return $this->media;
+    }
+
+    /**
+     * @param mixed $media
+     */
+    public function setMedia( $media )
+    {
+        $this->media = $media;
+    }
+
+    /**
+     * @Serializer\VirtualProperty()
+     * @Serializer\SerializedName("show")
+     */
+    public function getProgramName()
+    {
+        return $this->getProgram()->getCode();
     }
 }

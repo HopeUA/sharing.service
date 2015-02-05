@@ -20,10 +20,6 @@ class Youtube
      */
     protected $video;
     /**
-     * @ORM\OneToMany(targetEntity="YoutubePlaylistItem", mappedBy="video")
-     */
-    protected $playlist_items;
-    /**
      * @ORM\Column(type="string", length=20)
      */
     protected $link;
@@ -87,24 +83,6 @@ class Youtube
     {
         return $this->video;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->playlist_items = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Get playlist_items
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getPlaylistItems()
-    {
-        return $this->playlist_items;
-    }
-
     /**
      * Set published
      *

@@ -3,10 +3,10 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\NoResultException;
-use AppBundle\Module\Youtube\ChannelSelector;
-use AppBundle\Module\Youtube\Template;
-
+use AppBundle\Media\Media;
+use AppBundle\Media\Image;
+use AppBundle\Media\Video;
+use AppBundle\Media\Source;
 /**
  * EpisodeRepository
  *
@@ -15,64 +15,67 @@ use AppBundle\Module\Youtube\Template;
  */
 class EpisodeRepository extends EntityRepository
 {
-    public function getByProgram($program)
+    /**
+     * @return Episode[]
+     */
+    public function getAll()
     {
-        $programRegex = '~^[A-Z]{4}$~';
-        if (preg_match($programRegex, $program)) {
-            $query = $this->getEntityManager()
-                          ->createQuery(
-                           'SELECT v, p FROM AppBundle:Episode v
-                             JOIN v.program p
-                             WHERE p.code = :program
-                             ORDER BY v.publish ASC')
-                          ->setParameter('program', $program);
-        } else {
-            $query = $this->getEntityManager()
-                          ->createQuery(
-                           'SELECT v FROM AppBundle:Episode v
-                             WHERE v.program = :program
-                             ORDER BY v.publish ASC')
-                          ->setParameter('program', $program);
-        }
-
-        $videos = $query->getResult();
-        return $videos;
-    }
-
-    public function getByCode($code)
-    {
-        $query = $this->getEntityManager()
-                      ->createQuery(
-                       'SELECT v FROM AppBundle:Episode v
-                         WHERE v.code = :code')
-                      ->setMaxResults(1)
-                      ->setParameter('code', $code);
         /**
-         * @var \AppBundle\Entity\Episode $video
+         * @var \AppBundle\Entity\Episode[] $episodes
          */
-        try {
-            $video = $query->getSingleResult();
-        } catch(NoResultException $e) {
-            $video = new Episode();
+        $episodes = $this->findBy([], null, 10);
+        foreach ($episodes as $episode)
+        {
+            $this->injectMedia($episode);
         }
 
-        return $video;
+        return $episodes;
     }
 
-    public function getForTrash($checked)
+    /**
+     * @param $code
+     *
+     * @return Episode
+     */
+    public function getOne($code)
     {
-        $programRepo = $this->getEntityManager()->getRepository('AppBundle:Show');
-        $mh = $programRepo->findOneBy(['code' => 'MHKU']);
+        /**
+         * @var \AppBundle\Entity\Episode $episode
+         */
+        $episode = $this->findOneBy(['code' => $code]);
+        $this->injectMedia($episode);
 
-        $query = $this->getEntityManager()->createQuery(
-                       'SELECT v FROM AppBundle:Episode v
-                         WHERE v.id NOT IN (:checked)
-                           AND v.program = :program
-                           AND v.trash = 0')
-                      ->setParameter('checked', $checked)
-                      ->setParameter('program', $mh);
+        return $episode;
+    }
 
-        $videos = $query->getResult();
-        return $videos;
+    /**
+     * @param Episode $episode
+     */
+    private function injectMedia(Episode $episode)
+    {
+        $media = new Media();
+
+        $image = new Image();
+        $image->setUrl(sprintf('http://share.yourhope.tv/%s.jpg', $episode->getCode()));
+        $media->setImage($image);
+
+        $video = new Video();
+
+        $localSource = new Source\Local();
+        $localSource->setUrl(sprintf('http://share.yourhope.tv/%s.mov', $episode->getCode()));
+        $localSource->setSize(0);
+
+        $video->addSource($localSource);
+
+        if ($episode->getYoutube() !== null) {
+            $youtubeSource = new Source\Youtube();
+            $youtubeSource->setId($episode->getYoutube()->getLink());
+
+            $video->addSource($youtubeSource);
+        }
+
+        $media->setVideo($video);
+
+        $episode->setMedia($media);
     }
 }
