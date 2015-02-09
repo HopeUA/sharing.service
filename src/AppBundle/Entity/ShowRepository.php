@@ -2,8 +2,9 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Media\Media;
+use AppBundle\Media\Image;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\Orm\NoResultException;
 
 /**
  * ShowRepository
@@ -22,6 +23,9 @@ class ShowRepository extends EntityRepository
          * @var \AppBundle\Entity\Show[] $shows
          */
         $shows = $this->findBy([], null, 10);
+        foreach ($shows as $show) {
+            $this->injectMedia($show);
+        }
 
         return $shows;
     }
@@ -37,7 +41,20 @@ class ShowRepository extends EntityRepository
          * @var \AppBundle\Entity\Show $show
          */
         $show = $this->findOneBy(['code' => $code]);
+        $this->injectMedia($show);
 
         return $show;
+    }
+
+    private function injectMedia(Show $show)
+    {
+        $media = new Media();
+
+        $image = new Image();
+        $image->setUrl(sprintf('http://hope.ua/images/programs/%s.png', $show->getCode()));
+
+        $media->setImage($image);
+
+        $show->setMedia($media);
     }
 }

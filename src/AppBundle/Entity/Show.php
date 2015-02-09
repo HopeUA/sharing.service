@@ -36,6 +36,27 @@ class Show
      */
     protected $videos;
 
+    /**
+     * @Serializer\Expose()
+     */
+    protected $media;
+
+    /**
+     * @return mixed
+     */
+    public function getMedia()
+    {
+        return $this->media;
+    }
+
+    /**
+     * @param mixed $media
+     */
+    public function setMedia( $media )
+    {
+        $this->media = $media;
+    }
+
     public function __construct()
     {
         $this->videos = new ArrayCollection();

@@ -7,6 +7,7 @@ use AppBundle\Media\Media;
 use AppBundle\Media\Image;
 use AppBundle\Media\Video;
 use AppBundle\Media\Source;
+
 /**
  * EpisodeRepository
  *
@@ -24,8 +25,7 @@ class EpisodeRepository extends EntityRepository
          * @var \AppBundle\Entity\Episode[] $episodes
          */
         $episodes = $this->findBy([], null, 10);
-        foreach ($episodes as $episode)
-        {
+        foreach ($episodes as $episode) {
             $this->injectMedia($episode);
         }
 
