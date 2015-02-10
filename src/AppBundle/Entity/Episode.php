@@ -9,6 +9,7 @@ use JMS\Serializer\Annotation as Serializer;
  * @ORM\Table(name="shared_video", uniqueConstraints={@ORM\UniqueConstraint(name="code_idx", columns={"code"})})
  *
  * @Serializer\ExclusionPolicy("all")
+ * @Serializer\AccessorOrder("custom", custom = {"code", "title", "program_name", "desc", "tags", "media"})
  */
 class Episode
 {
@@ -363,6 +364,8 @@ class Episode
     /**
      * @Serializer\VirtualProperty()
      * @Serializer\SerializedName("show")
+     *
+     * @return string
      */
     public function getProgramName()
     {

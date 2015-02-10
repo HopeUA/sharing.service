@@ -12,32 +12,5 @@ use Doctrine\ORM\EntityRepository;
  */
 class YoutubeRepository extends EntityRepository
 {
-    public function getUnpublished()
-    {
-        $query = $this->getEntityManager()
-                      ->createQuery(
-                       'SELECT y, v FROM AppBundle:Youtube y
-                         JOIN y.video v
-                         WHERE v.publish <= :now
-                           AND y.published = 0
-                           AND v.trash     = 0')
-                      ->setParameter('now', new \DateTime());
 
-        $videos = $query->getResult();
-        return $videos;
-    }
-
-    public function getForUnpublish()
-    {
-        $query = $this->getEntityManager()
-                      ->createQuery(
-                       'SELECT y, v FROM AppBundle:Youtube y
-                         JOIN y.video v
-                         WHERE (v.publish > :now OR v.trash = 1)
-                           AND y.published = 1')
-                      ->setParameter('now', new \DateTime());
-
-        $videos = $query->getResult();
-        return $videos;
-    }
 }
