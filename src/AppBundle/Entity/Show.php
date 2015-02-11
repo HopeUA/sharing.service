@@ -10,6 +10,7 @@ use JMS\Serializer\Annotation as Serializer;
  * @ORM\Table(name="shared_program", uniqueConstraints={@ORM\UniqueConstraint(name="code_idx", columns={"code"})})
  *
  * @Serializer\ExclusionPolicy("all")
+ * @Serializer\AccessorOrder("custom", custom = {"code", "title", "category", "media"})
  */
 class Show
 {
@@ -35,7 +36,12 @@ class Show
      * @ORM\OneToMany(targetEntity="Episode", mappedBy="program")
      */
     protected $videos;
-
+    /**
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="shows")
+     * @ORM\JoinColumn(name="category", referencedColumnName="id")
+     */
+    protected $category;
+    
     /**
      * @Serializer\Expose()
      */
@@ -149,5 +155,43 @@ class Show
     public function getVideos()
     {
         return $this->videos;
+    }
+
+    /**
+     * Set category
+     *
+     * @param \AppBundle\Entity\Category $category
+     * @return Show
+     */
+    public function setCategory(\AppBundle\Entity\Category $category = null)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return \AppBundle\Entity\Category 
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * @Serializer\VirtualProperty()
+     * @Serializer\SerializedName("category")
+     *
+     * @return string
+     */
+    public function getCategoryId()
+    {
+        $id = 0;
+        if ($this->getCategory()) {
+            $id = $this->getCategory()->getId();
+        }
+        return $id;
     }
 }

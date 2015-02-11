@@ -2,9 +2,14 @@ app:
     resource: @AppBundle/Controller/
     type:     annotation
 
-episodes:
+categories:
     type: rest
-    resource: AppBundle\Controller\EpisodesController
+    resource: AppBundle\Controller\CategoriesController
+
 shows:
     type: rest
     resource: AppBundle\Controller\ShowsController
+
+episodes:
+    type: rest
+    resource: AppBundle\Controller\EpisodesController

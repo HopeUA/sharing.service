@@ -38,7 +38,7 @@ class ShowsController extends AppController
 			throw new NotFoundHttpException('There is no shows, matching your request');
 		}
 
-		return ['shows' => $shows];
+		return $shows;
 	}
 
 	/**
