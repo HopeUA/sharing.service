@@ -41,6 +41,10 @@ class Show
      * @ORM\JoinColumn(name="category", referencedColumnName="id")
      */
     protected $category;
+    /**
+     * @ORM\OneToMany(targetEntity="Season", mappedBy="show")
+     */
+    protected $seasons;
     
     /**
      * @Serializer\Expose()
@@ -193,5 +197,38 @@ class Show
             $id = $this->getCategory()->getId();
         }
         return $id;
+    }
+
+    /**
+     * Add seasons
+     *
+     * @param \AppBundle\Entity\Season $seasons
+     * @return Show
+     */
+    public function addSeason(\AppBundle\Entity\Season $seasons)
+    {
+        $this->seasons[] = $seasons;
+
+        return $this;
+    }
+
+    /**
+     * Remove seasons
+     *
+     * @param \AppBundle\Entity\Season $seasons
+     */
+    public function removeSeason(\AppBundle\Entity\Season $seasons)
+    {
+        $this->seasons->removeElement($seasons);
+    }
+
+    /**
+     * Get seasons
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSeasons()
+    {
+        return $this->seasons;
     }
 }

@@ -5,10 +5,6 @@ use Doctrine\ORM\Mapping as ORM;
 
 trait Sortable
 {
-    /**
-     * @ORM\Column(type="integer")
-     */
-    protected $sort;
 
     /**
      * @return int

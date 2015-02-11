@@ -28,9 +28,13 @@ class Episode
     /**
      * @ORM\ManyToOne(targetEntity="Show", inversedBy="videos")
      * @ORM\JoinColumn(name="program", referencedColumnName="id")
-     *
      */
     protected $program;
+    /**
+     * @ORM\ManyToOne(targetEntity="Season", inversedBy="episodes")
+     * @ORM\JoinColumn(name="season", referencedColumnName="id")
+     */
+    protected $season;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -370,5 +374,28 @@ class Episode
     public function getProgramName()
     {
         return $this->getProgram()->getCode();
+    }
+
+    /**
+     * Set season
+     *
+     * @param \AppBundle\Entity\Season $season
+     * @return Episode
+     */
+    public function setSeason(\AppBundle\Entity\Season $season = null)
+    {
+        $this->season = $season;
+
+        return $this;
+    }
+
+    /**
+     * Get season
+     *
+     * @return \AppBundle\Entity\Season 
+     */
+    public function getSeason()
+    {
+        return $this->season;
     }
 }

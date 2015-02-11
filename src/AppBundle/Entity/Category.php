@@ -10,12 +10,9 @@ use JMS\Serializer\Annotation as Serializer;
  * @ORM\Table(name="categories")
  *
  * @Serializer\ExclusionPolicy("all")
- * Serializer\AccessorOrder("custom", custom = {"code", "title", "program_name", "desc", "tags", "media"})
  */
 class Category
 {
-    use Sortable;
-
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -34,6 +31,10 @@ class Category
      * @ORM\OneToMany(targetEntity="Show", mappedBy="category")
      */
     private $shows;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $sort;
 
     /**
      * Get id
@@ -107,5 +108,28 @@ class Category
     public function getShows()
     {
         return $this->shows;
+    }
+
+    /**
+     * Set sort
+     *
+     * @param integer $sort
+     * @return Category
+     */
+    public function setSort($sort)
+    {
+        $this->sort = $sort;
+
+        return $this;
+    }
+
+    /**
+     * Get sort
+     *
+     * @return integer 
+     */
+    public function getSort()
+    {
+        return $this->sort;
     }
 }
