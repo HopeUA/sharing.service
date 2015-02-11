@@ -2,8 +2,6 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Helper\ListParameters;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use FOS\RestBundle\Controller\Annotations\View;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -11,18 +9,12 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 /**
  * Class EpisodesController
  */
-class EpisodesController extends Controller
+class EpisodesController extends AppController
 {
 	/**
 	 * @var \AppBundle\Entity\EpisodeRepository
 	 */
 	private $episodeRepo;
-
-	public function setContainer(ContainerInterface $container = null)
-    {
-        $this->container = $container;
-        $this->init();
-    }
 
 	public function init()
 	{
@@ -31,7 +23,10 @@ class EpisodesController extends Controller
 	}
 
 	/**
+	 * @param Request $request
+	 *
 	 * @return array
+	 *
 	 * @View()
 	 */
 	public function getEpisodesAction(Request $request)
