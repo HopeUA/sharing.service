@@ -1,7 +1,6 @@
 <?php
 namespace AppBundle\Entity;
 
-use AppBundle\Helper\Sortable;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 
@@ -18,10 +17,14 @@ class Season
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+    /**
+     * @ORM\Column(type="string", length=255)
      *
      * @Serializer\Expose()
      */
-    private $id;
+    private $uid;
     /**
      * @ORM\Column(type="string", length=255)
      *
@@ -160,5 +163,28 @@ class Season
     public function getShow()
     {
         return $this->show;
+    }
+
+    /**
+     * Set uid
+     *
+     * @param string $uid
+     * @return Season
+     */
+    public function setUid($uid)
+    {
+        $this->uid = $uid;
+
+        return $this;
+    }
+
+    /**
+     * Get uid
+     *
+     * @return string 
+     */
+    public function getUid()
+    {
+        return $this->uid;
     }
 }

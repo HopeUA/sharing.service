@@ -42,15 +42,15 @@ class CategoriesController extends AppController
 	}
 
 	/**
-	 * @param string $code
+	 * @param int $id
 	 *
 	 * @return array
 	 *
 	 * @View()
 	 */
-	public function getCategoryAction($code)
+	public function getCategoryAction($id)
 	{
-		$category = $this->catRepo->getOne($code);
+		$category = $this->catRepo->getOne($id);
 
 		if ($category === null) {
 			throw new NotFoundHttpException('Category not found');

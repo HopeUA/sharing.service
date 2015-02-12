@@ -2,14 +2,6 @@ app:
     resource: @AppBundle/Controller/
     type:     annotation
 
-categories:
+rest:
     type: rest
-    resource: AppBundle\Controller\CategoriesController
-
-shows:
-    type: rest
-    resource: AppBundle\Controller\ShowsController
-
-episodes:
-    type: rest
-    resource: AppBundle\Controller\EpisodesController
+    resource: "@AppBundle/Resources/config/routing.yml"

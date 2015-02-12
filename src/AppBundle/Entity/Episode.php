@@ -398,4 +398,19 @@ class Episode
     {
         return $this->season;
     }
+
+    /**
+     * @Serializer\VirtualProperty()
+     * @Serializer\SerializedName("season")
+     *
+     * @return string
+     */
+    public function getSeasonId()
+    {
+        $id = 0;
+        if ($this->getSeason()) {
+            $id = $this->getSeason()->getId();
+        }
+        return $id;
+    }
 }

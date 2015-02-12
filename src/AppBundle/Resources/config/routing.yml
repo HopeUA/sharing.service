@@ -1,0 +1,16 @@
+categories:
+    type: rest
+    resource: AppBundle\Controller\CategoriesController
+
+shows:
+    type: rest
+    resource: AppBundle\Controller\ShowsController
+
+seasons:
+    type: rest
+    resource: AppBundle\Controller\SeasonsController
+    parent: shows
+
+episodes:
+    type: rest
+    resource: AppBundle\Controller\EpisodesController
