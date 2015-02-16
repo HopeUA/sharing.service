@@ -19,6 +19,14 @@ abstract class Entry
     public function __construct()
     {
         $this->moment = new \DateTime();
+        $this->init();
+    }
+
+    /**
+     * Calls after object creating
+     */
+    protected function init()
+    {
     }
 
     abstract public function setData($data);

@@ -10,10 +10,4 @@ class EntryTest extends \PHPUnit_Framework_TestCase
         $entry = new SampleEntry();
         $this->assertEquals('sample.entry', $entry->getType());
     }
-
-    public function testData()
-    {
-        $entry = new SampleEntry();
-
-    }
 }

@@ -3,7 +3,7 @@ namespace AppBundle\Journal;
 
 use AppBundle\Exception\JournalException;
 use Doctrine\ORM\EntityManager;
-use Symfony\Component\Serializer\Serializer;
+use JMS\Serializer\Serializer;
 
 class Journal
 {
@@ -29,8 +29,8 @@ class Journal
 
         $stmt->bindValue('uid', $entry->getUid());
         $stmt->bindValue('type', $entry->getType());
-        $stmt->bindValue('data', $this->serializer->encode($entry->getData(), 'json'));
-        $stmt->bindValue('moment', $entry->getMoment());
+        $stmt->bindValue('data', $this->serializer->serialize($entry->getData(), 'json'));
+        $stmt->bindValue('moment', $entry->getMoment()->format('Y-m-d H:i:s'));
 
         $result = $stmt->execute();
 

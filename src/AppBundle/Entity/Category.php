@@ -1,7 +1,6 @@
 <?php
 namespace AppBundle\Entity;
 
-use AppBundle\Helper\Sortable;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 
