@@ -56,22 +56,33 @@ class Episode
     protected $tags = '';
     /**
      * @ORM\Column(type="datetime")
+     *
+     * @Serializer\Expose()
+     * @Serializer\Type("DateTime<'Y-m-d H:i:s'>")
      */
     protected $publish;
     /**
      * @ORM\Column(type="string", length=10)
+     *
+     * @Serializer\Expose()
      */
     protected $language;
     /**
      * @ORM\Column(type="string", length=100)
+     *
+     * @Serializer\Expose()
      */
     protected $author;
     /**
      * @ORM\Column(type="integer")
+     *
+     * @Serializer\Expose()
      */
     protected $duration;
     /**
      * @ORM\Column(type="boolean")
+     *
+     * @Serializer\Expose()
      */
     protected $hd;
     /**
@@ -86,6 +97,7 @@ class Episode
      * @ORM\Column(type="datetime")
      *
      * @Serializer\Expose()
+     * @Serializer\Type("DateTime<'Y-m-d H:i:s'>")
      */
     protected $modified;
 
@@ -423,7 +435,7 @@ class Episode
     {
         $id = 0;
         if ($this->getSeason()) {
-            $id = $this->getSeason()->getId();
+            $id = $this->getSeason()->getUid();
         }
         return $id;
     }

@@ -50,6 +50,7 @@ class Category
      * @ORM\Column(type="datetime")
      *
      * @Serializer\Expose()
+     * @Serializer\Type("DateTime<'Y-m-d H:i:s'>")
      */
     protected $modified;
 
