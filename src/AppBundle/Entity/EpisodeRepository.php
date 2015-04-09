@@ -20,7 +20,11 @@ class EpisodeRepository extends ResourceRepository
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('e')
             ->from('AppBundle:Episode', 'e')
-            ->orderBy('e.code', 'ASC');
+            ->orderBy('e.id', 'ASC');
+
+        // Modified from
+        $qb->where('e.modified >= :from');
+        $qb->setParameter('from', $params->getFrom());
 
         $episodes = $this->getPaginator()->paginate($qb, $params->getPage(), $params->getLimit());
 

@@ -29,6 +29,10 @@ class SeasonRepository extends ResourceRepository
             $qb->setParameter('show', $showId);
         }
 
+        // Modified from
+        $qb->where('s.modified >= :from');
+        $qb->setParameter('from', $params->getFrom());
+
         if ($this->getPaginator()) {
             $seasons = $this->getPaginator()->paginate($qb, $params->getPage(), $params->getLimit());
         } else {

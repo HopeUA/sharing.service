@@ -24,7 +24,11 @@ class ShowRepository extends ResourceRepository
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('s')
             ->from('AppBundle:Show', 's')
-            ->orderBy('s.code', 'ASC');
+            ->orderBy('s.id', 'ASC');
+
+        // Modified from
+        $qb->where('s.modified >= :from');
+        $qb->setParameter('from', $params->getFrom());
 
         $shows = $this->getPaginator()->paginate($qb, $params->getPage(), $params->getLimit());
 

@@ -23,6 +23,10 @@ class CategoryRepository extends ResourceRepository
             ->from('AppBundle:Category', 'c')
             ->orderBy('c.sort', 'ASC');
 
+        // Modified from
+        $qb->where('c.modified >= :from');
+        $qb->setParameter('from', $params->getFrom());
+
         $categories = $this->getPaginator()->paginate($qb, $params->getPage(), $params->getLimit());
 
         return $categories;
