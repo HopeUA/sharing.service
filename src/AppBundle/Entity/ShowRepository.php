@@ -46,7 +46,9 @@ class ShowRepository extends ResourceRepository
          * @var \AppBundle\Entity\Show $show
          */
         $show = $this->findOneBy(['code' => $code]);
-        $this->injectMedia($show);
+        if ($show !== null) {
+            $this->injectMedia($show);
+        }
 
         return $show;
     }

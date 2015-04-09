@@ -59,6 +59,14 @@ class Episode
      */
     protected $publish;
     /**
+     * @ORM\Column(type="string", length=10)
+     */
+    protected $language;
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    protected $author;
+    /**
      * @ORM\Column(type="integer")
      */
     protected $duration;
@@ -74,6 +82,12 @@ class Episode
      * @ORM\Column(type="smallint")
      */
     protected $trash = 0;
+    /**
+     * @ORM\Column(type="datetime")
+     *
+     * @Serializer\Expose()
+     */
+    protected $modified;
 
     protected $syncFields = array(
                 'title',
@@ -412,5 +426,74 @@ class Episode
             $id = $this->getSeason()->getId();
         }
         return $id;
+    }
+
+    /**
+     * Set modified
+     *
+     * @param \DateTime $modified
+     * @return Episode
+     */
+    public function setModified($modified)
+    {
+        $this->modified = $modified;
+
+        return $this;
+    }
+
+    /**
+     * Get modified
+     *
+     * @return \DateTime 
+     */
+    public function getModified()
+    {
+        return $this->modified;
+    }
+
+    /**
+     * Set language
+     *
+     * @param string $language
+     * @return Episode
+     */
+    public function setLanguage($language)
+    {
+        $this->language = $language;
+
+        return $this;
+    }
+
+    /**
+     * Get language
+     *
+     * @return string 
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
+     * Set author
+     *
+     * @param string $author
+     * @return Episode
+     */
+    public function setAuthor($author)
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * Get author
+     *
+     * @return string 
+     */
+    public function getAuthor()
+    {
+        return $this->author;
     }
 }

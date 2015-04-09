@@ -23,22 +23,33 @@ class SeasonRepository extends ResourceRepository
             ->from('AppBundle:Season', 's')
             ->orderBy('s.sort', 'ASC');
 
-        $seasons = $this->getPaginator()->paginate($qb, $params->getPage(), $params->getLimit());
+        $showId = $params->get('showId');
+        if (null !== $showId) {
+            $qb->where('s.show = :show');
+            $qb->setParameter('show', $showId);
+        }
+
+        if ($this->getPaginator()) {
+            $seasons = $this->getPaginator()->paginate($qb, $params->getPage(), $params->getLimit());
+        } else {
+            $seasons = $qb->getQuery()->getResult();
+        }
 
         return $seasons;
     }
 
     /**
+     * @param Show $show
      * @param string $uid
      *
      * @return Season
      */
-    public function getOne($uid)
+    public function getOne(Show $show, $uid)
     {
         /**
          * @var \AppBundle\Entity\Season $season
          */
-        $season = $this->findOneBy(['uid' => $uid]);
+        $season = $this->findOneBy(['show' => $show, 'uid' => $uid]);
 
         return $season;
     }

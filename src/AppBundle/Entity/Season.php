@@ -37,13 +37,19 @@ class Season
     private $episodes;
     /**
      * @ORM\ManyToOne(targetEntity="Show", inversedBy="seasons")
-     * @ORM\JoinColumn(name="show", referencedColumnName="id")
+     * @ORM\JoinColumn(name="`show`", referencedColumnName="id")
      */
     private $show;
     /**
      * @ORM\Column(type="integer")
      */
     protected $sort;
+    /**
+     * @ORM\Column(type="datetime")
+     *
+     * @Serializer\Expose()
+     */
+    protected $modified;
 
     /**
      * Get id
@@ -186,5 +192,28 @@ class Season
     public function getUid()
     {
         return $this->uid;
+    }
+
+    /**
+     * Set modified
+     *
+     * @param \DateTime $modified
+     * @return Season
+     */
+    public function setModified($modified)
+    {
+        $this->modified = $modified;
+
+        return $this;
+    }
+
+    /**
+     * Get modified
+     *
+     * @return \DateTime 
+     */
+    public function getModified()
+    {
+        return $this->modified;
     }
 }

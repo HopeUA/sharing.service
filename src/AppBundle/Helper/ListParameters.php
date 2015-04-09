@@ -17,6 +17,10 @@ class ListParameters
      * @var int  Limit on page
      */
     private $limit = self::DEFAULT_LIMIT;
+    /**
+     * @var array  Custom data
+     */
+    private $data = [];
 
     /**
      * @return int
@@ -61,6 +65,29 @@ class ListParameters
         }
 
         $this->limit = $limit;
+    }
+
+    /**
+     * Set custom param
+     *
+     * @param $key
+     * @param $val
+     */
+    public function set($key, $val)
+    {
+        $this->data[$key] = $val;
+    }
+
+    /**
+     * Get custom param
+     *
+     * @param $key
+     *
+     * @return mixed|null
+     */
+    public function get($key)
+    {
+        return isset($this->data[$key]) ? $this->data[$key] : null;
     }
 
     /**

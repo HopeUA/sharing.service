@@ -21,11 +21,23 @@ class Category
      */
     private $id;
     /**
+     * @ORM\Column(type="string", length=255, unique=true)
+     *
+     * @Serializer\Expose()
+     */
+    private $uid;
+    /**
      * @ORM\Column(type="string", length=255)
      *
      * @Serializer\Expose()
      */
-    private $title;
+    private $title_ru;
+    /**
+     * @ORM\Column(type="string", length=255)
+     *
+     * @Serializer\Expose()
+     */
+    private $title_ua;
     /**
      * @ORM\OneToMany(targetEntity="Show", mappedBy="category")
      */
@@ -34,6 +46,12 @@ class Category
      * @ORM\Column(type="integer")
      */
     protected $sort;
+    /**
+     * @ORM\Column(type="datetime")
+     *
+     * @Serializer\Expose()
+     */
+    protected $modified;
 
     /**
      * Get id
@@ -43,29 +61,6 @@ class Category
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set title
-     *
-     * @param string $title
-     * @return Category
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-
-    /**
-     * Get title
-     *
-     * @return string 
-     */
-    public function getTitle()
-    {
-        return $this->title;
     }
 
     /**
@@ -130,5 +125,97 @@ class Category
     public function getSort()
     {
         return $this->sort;
+    }
+
+    /**
+     * Set uid
+     *
+     * @param string $uid
+     * @return Category
+     */
+    public function setUid($uid)
+    {
+        $this->uid = $uid;
+
+        return $this;
+    }
+
+    /**
+     * Get uid
+     *
+     * @return string 
+     */
+    public function getUid()
+    {
+        return $this->uid;
+    }
+
+    /**
+     * Set title_ru
+     *
+     * @param string $titleRu
+     * @return Category
+     */
+    public function setTitleRu($titleRu)
+    {
+        $this->title_ru = $titleRu;
+
+        return $this;
+    }
+
+    /**
+     * Get title_ru
+     *
+     * @return string 
+     */
+    public function getTitleRu()
+    {
+        return $this->title_ru;
+    }
+
+    /**
+     * Set title_ua
+     *
+     * @param string $titleUa
+     * @return Category
+     */
+    public function setTitleUa($titleUa)
+    {
+        $this->title_ua = $titleUa;
+
+        return $this;
+    }
+
+    /**
+     * Get title_ua
+     *
+     * @return string 
+     */
+    public function getTitleUa()
+    {
+        return $this->title_ua;
+    }
+
+    /**
+     * Set modified
+     *
+     * @param \DateTime $modified
+     * @return Category
+     */
+    public function setModified($modified)
+    {
+        $this->modified = $modified;
+
+        return $this;
+    }
+
+    /**
+     * Get modified
+     *
+     * @return \DateTime 
+     */
+    public function getModified()
+    {
+        return $this->modified;
     }
 }

@@ -42,4 +42,14 @@ class CategoryRepository extends ResourceRepository
 
         return $category;
     }
+
+    public function getByUid($uid)
+    {
+        /**
+         * @var \AppBundle\Entity\Category $category
+         */
+        $category = $this->findOneBy(['uid' => $uid]);
+
+        return $category;
+    }
 }

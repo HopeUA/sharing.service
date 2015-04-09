@@ -45,6 +45,12 @@ class Show
      * @ORM\OneToMany(targetEntity="Season", mappedBy="show")
      */
     protected $seasons;
+    /**
+     * @ORM\Column(type="datetime")
+     *
+     * @Serializer\Expose()
+     */
+    protected $modified;
     
     /**
      * @Serializer\Expose()
@@ -230,5 +236,28 @@ class Show
     public function getSeasons()
     {
         return $this->seasons;
+    }
+
+    /**
+     * Set modified
+     *
+     * @param \DateTime $modified
+     * @return Show
+     */
+    public function setModified($modified)
+    {
+        $this->modified = $modified;
+
+        return $this;
+    }
+
+    /**
+     * Get modified
+     *
+     * @return \DateTime 
+     */
+    public function getModified()
+    {
+        return $this->modified;
     }
 }
