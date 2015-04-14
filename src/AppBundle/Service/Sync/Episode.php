@@ -57,6 +57,7 @@ class Episode extends Entity
         $episode->setModified($this->modified);
         $episode->setHd($data['hd']);
         $episode->setDuration($data['duration']);
+        $episode->setTrash(0);
 
         // Tags
         $tags = isset($data['tags']) ? explode(',', $data['tags']) : [];
@@ -82,7 +83,8 @@ class Episode extends Entity
 
         $episode = $this->repo->getOne($data['code']);
         if (null !== $episode) {
-            $this->em->remove($episode);
+            $episode->setTrash(1);
+            $this->em->persist($episode);
             $this->em->flush();
         }
     }
