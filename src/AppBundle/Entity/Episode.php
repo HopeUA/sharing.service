@@ -3,10 +3,12 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
+use AppBundle\Media\Media;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Entity\EpisodeRepository")
  * @ORM\Table(name="shared_video", uniqueConstraints={@ORM\UniqueConstraint(name="code_idx", columns={"code"})})
+ * @ORM\EntityListeners({"AppBundle\Entity\EpisodeListener"})
  *
  * @Serializer\ExclusionPolicy("all")
  * @Serializer\AccessorOrder("custom", custom = {"code", "title", "program_name", "desc", "tags", "media"})
@@ -115,6 +117,8 @@ class Episode
     protected $status;
 
     /**
+     * @var Media
+     *
      * @Serializer\Expose()
      */
     protected $media;
@@ -376,7 +380,7 @@ class Episode
     }
 
     /**
-     * @return mixed
+     * @return Media
      */
     public function getMedia()
     {
@@ -384,9 +388,9 @@ class Episode
     }
 
     /**
-     * @param mixed $media
+     * @param Media $media
      */
-    public function setMedia( $media )
+    public function setMedia( Media $media )
     {
         $this->media = $media;
     }

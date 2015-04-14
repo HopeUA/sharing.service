@@ -30,7 +30,7 @@ class SeasonRepository extends ResourceRepository
         }
 
         // Modified from
-        $qb->where('s.modified >= :from');
+        $qb->andWhere('s.modified >= :from');
         $qb->setParameter('from', $params->getFrom());
 
         if ($this->getPaginator()) {

@@ -14,4 +14,9 @@ class Video
 	{
 		$this->sources[$source->getName()] = $source;
 	}
+
+    public function getSources()
+    {
+        return $this->sources;
+    }
 }
