@@ -20,15 +20,17 @@ class Season extends Entity
             throw new PullException('Uid can not be empty');
         }
 
+        $showName = isset($data['program']) ? $data['program'] : (isset($data['show']) ? $data['show'] : '');
+
         /**
          * @var \AppBundle\Entity\ShowRepository $showRepo
          */
         $showRepo = $this->em->getRepository('AppBundle:Show');
-        $show     = $showRepo->getOne($data['program']);
+        $show     = $showRepo->getOne($showName);
         if (null === $show) {
             throw new PullException(sprintf(
                 'Show "%s" does not exists',
-                $data['program']
+                $showName
             ));
         }
 
@@ -58,15 +60,16 @@ class Season extends Entity
             throw new PullException('Uid can not be empty');
         }
 
+        $showName = isset($data['program']) ? $data['program'] : (isset($data['show']) ? $data['show'] : '');
         /**
          * @var \AppBundle\Entity\ShowRepository $showRepo
          */
         $showRepo = $this->em->getRepository('AppBundle:Show');
-        $show     = $showRepo->getOne($data['program']);
+        $show     = $showRepo->getOne($showName);
         if (null === $show) {
             throw new PullException(sprintf(
                 'Show "%s" does not exists',
-                $data['program']
+                $showName
             ));
         }
 
