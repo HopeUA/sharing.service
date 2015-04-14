@@ -55,6 +55,7 @@ class Sync
                     'from' => $from,
                     'page' => $page
                 ],
+                'exceptions' => false,
             ]);
             $this->log->info(sprintf(
                 'HTTP Response [%d] from %s',

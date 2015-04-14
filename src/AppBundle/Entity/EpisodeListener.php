@@ -28,22 +28,6 @@ class EpisodeListener
             }
         }
 
-        if (count($changeSet) > 0) {
-            $this->afterUpdate($episode, $args->getEntityManager());
-        }
-    }
-
-    private function afterUpdate(Episode $episode, EntityManager $em)
-    {
-        /**
-         * @var \AppBundle\Entity\EpisodeRepository $episodeRepo
-         */
-        $episodeRepo = $em->getRepository('AppBundle:Episode');
-
-        $channelSelector = new ChannelSelector($episode->getCode());
-        $channel         = $channelSelector->program();
-        $mqGroup         = 'yt-' . $channel;
-
         $uploaded = true;
         if ($episode->getMedia() === null) {
             $uploaded = false;
@@ -53,6 +37,22 @@ class EpisodeListener
                 $uploaded = false;
             }
         }
+
+        if (count($changeSet) > 0 || !$uploaded) {
+            $this->afterUpdate($episode, $args->getEntityManager(), $uploaded);
+        }
+    }
+
+    private function afterUpdate(Episode $episode, EntityManager $em, $uploaded)
+    {
+        /**
+         * @var \AppBundle\Entity\EpisodeRepository $episodeRepo
+         */
+        $episodeRepo = $em->getRepository('AppBundle:Episode');
+
+        $channelSelector = new ChannelSelector($episode->getCode());
+        $channel         = $channelSelector->program();
+        $mqGroup         = 'yt-' . $channel;
 
         if ($uploaded) {
             $mqGroup = 'fast';

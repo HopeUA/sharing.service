@@ -62,9 +62,9 @@ class PullCommand extends ContainerAwareCommand
             $sync->setLog($logger);
             $sync->run($configManager);
 
-            $logger->info('END Sync. Success...');
+            $logger->info('END sync. Success...');
         } catch (\Exception $e) {
-            $logger->error('END Sync. Error...');
+            $logger->error('END sync. Error...');
         }
 
         // Unlock process
