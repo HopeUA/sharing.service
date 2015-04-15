@@ -34,7 +34,6 @@ class Template
         $n       = $this->getVideoNumbers();
 
         switch ($program->getCode()) {
-            case 'MBCU': // Музична скринька № 38 (12)
             case 'PSCU':
                 $title = $program->getTitle() . ' № ' . $n->num . ' (' . $n->year . ')';
                 break;
