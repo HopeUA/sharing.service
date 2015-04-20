@@ -9,7 +9,7 @@ class EpisodeListener
 {
     public function postPersist(Episode $episode, LifecycleEventArgs $args)
     {
-        $this->afterUpdate($episode, $args->getEntityManager());
+        $this->afterUpdate($episode, $args->getEntityManager(), false);
     }
 
     public function postUpdate(Episode $episode, LifecycleEventArgs $args)
