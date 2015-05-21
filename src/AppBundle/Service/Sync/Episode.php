@@ -88,4 +88,9 @@ class Episode extends Entity
             $this->em->flush();
         }
     }
+
+    public function youtube(array $data)
+    {
+
+    }
 }
