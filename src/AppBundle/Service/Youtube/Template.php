@@ -53,8 +53,8 @@ class Template
             case 'MHKU':
                 $title = '{title} | Ранок Надії';
                 break;
-            default: // На щастя, на долю... | Ваша думка [19/13]
-                $title = '{title} | ' . $program->getTitle() . ' [' . $n->num . '/' . $n->year . ']';
+            default: // На щастя, на долю... | Ваша думка
+                $title = '{title} | ' . $program->getTitle();
         }
 
         // Удаление сурдоперевода
