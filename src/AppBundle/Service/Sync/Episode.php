@@ -91,6 +91,5 @@ class Episode extends Entity
 
     public function youtube(array $data)
     {
-
     }
 }

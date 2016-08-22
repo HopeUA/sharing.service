@@ -1,38 +1,20 @@
 <?php
 namespace AppBundle\Service\Youtube;
 
+use GuzzleHttp;
+
 /**
  * Provides the channel name of selected program
  */
 class ChannelSelector
 {
-    const DEFAULT_CHANNEL = 'hopeua';
-
-    private $config;
     private $code;
     private $channel;
     private $compressor = 1;
 
     public function __construct($code)
     {
-        $this->config = [
-            'signs' => [
-                'programs' => [
-                    '[A-Z]{3}Z'
-                ]
-            ],
-            'morning' => [
-                'programs' => [
-                    'MHKU',
-                    'WGKU',
-                    'ZGKU',
-                    'STKU',
-                    'LLKU',
-                    'KUKU'
-                ]
-            ],
-        ];
-        $this->code   = $code;
+        $this->code = $code;
     }
 
     /**
@@ -43,18 +25,8 @@ class ChannelSelector
     public function program()
     {
         if ($this->channel == '') {
-            $this->channel = self::DEFAULT_CHANNEL;
-
-            foreach ($this->config as $channel => $data) {
-                if (isset($data['programs'])) {
-                    foreach ($data['programs'] as $exp) {
-                        if (preg_match("~$exp~", $this->code)) {
-                            $this->channel = $channel;
-                            break 2;
-                        }
-                    }
-                }
-            }
+            $channel = $this->apiRequest($this->code);
+            $this->channel = $channel['alias'];
         }
 
         return $this->channel;
@@ -74,5 +46,24 @@ class ChannelSelector
         }
 
         return $this->compressor;
+    }
+
+    private function apiRequest($code)
+    {
+        $url = 'http://db2.yourhope.tv/api/channel';
+
+        $client = new GuzzleHttp\Client();
+        $response = $client->get($url, [
+            'query' => [
+                'code' => $code,
+            ],
+            'exceptions' => false,
+        ]);
+
+        if ($response->getStatusCode() != 200) {
+            return false;
+        }
+
+        return $response->json();
     }
 }

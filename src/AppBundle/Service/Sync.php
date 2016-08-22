@@ -116,8 +116,8 @@ class Sync
         if (!method_exists($manager, $task)) {
             throw new PullException(sprintf(
                 'Action "%s" for entity "%s" not found',
-                $entity,
-                $task
+                $task,
+                $entity
             ));
         }
 
