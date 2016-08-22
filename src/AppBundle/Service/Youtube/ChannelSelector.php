@@ -10,6 +10,7 @@ class ChannelSelector
 {
     private $code;
     private $channel;
+    private $owner;
     private $compressor = 1;
 
     public function __construct($code)
@@ -27,6 +28,7 @@ class ChannelSelector
         if ($this->channel == '') {
             $channel = $this->apiRequest($this->code);
             $this->channel = $channel['alias'];
+            $this->owner   = $channel['owner'];
         }
 
         return $this->channel;
@@ -46,6 +48,13 @@ class ChannelSelector
         }
 
         return $this->compressor;
+    }
+
+    public function owner()
+    {
+        $this->program();
+
+        return $this->owner;
     }
 
     private function apiRequest($code)

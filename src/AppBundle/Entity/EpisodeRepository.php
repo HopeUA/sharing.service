@@ -91,12 +91,15 @@ class EpisodeRepository extends ResourceRepository
      * @param string      $priority
      * @param             $mqGroup
      */
-    public function compressForYoutube(Episode $video, $compressor = 1, $priority = "medium", $mqGroup)
+    public function compressForYoutube(Episode $video, $compressor = 1, $priority = "medium", $mqGroup, $presetAlias = '')
     {
         $code        = $video->getCode();
         $programCode = $video->getProgram()->getCode();
 
         $preset = $video->getHd() ? 'YoutubeHD' : 'YoutubeSD';
+        if ($presetAlias != '') {
+            $preset = $presetAlias . '-' . $preset;
+        }
 
         $compressorData = array(
             "input" => array(
