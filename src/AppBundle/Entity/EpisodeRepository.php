@@ -197,7 +197,19 @@ class EpisodeRepository extends ResourceRepository
     public function getPreset(Episode $episode)
     {
         $selector = new ChannelSelector($episode->getCode());
-        $preset   = $episode->getHd() ? 'YoutubeHD' : 'YoutubeSD';
+        switch ($episode->getFormat()) {
+            case '1080p50':
+                $preset = 'YoutubeFullHD50';
+                break;
+            case '1080p25':
+                $preset = 'YoutubeFullHD25';
+                break;
+            case '720p50':
+                $preset = 'YoutubeHD';
+                break;
+            default:
+                $preset = 'YoutubeSD';
+        }
 
         if ($selector->owner() == 'hoperu') {
             $preset = 'RU' . $preset;

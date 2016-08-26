@@ -88,6 +88,12 @@ class Episode
      */
     protected $hd;
     /**
+     * @ORM\Column(type="string")
+     *
+     * @Serializer\Expose()
+     */
+    protected $format;
+    /**
      * @ORM\OneToOne(targetEntity="Youtube", mappedBy="video")
      */
     protected $youtube;
@@ -361,6 +367,28 @@ class Episode
     public function getTrash()
     {
         return $this->trash;
+    }
+    /**
+     * Set format
+     *
+     * @param string $format
+     * @return Episode
+     */
+    public function setFormat($format)
+    {
+        $this->format = $format;
+
+        return $this;
+    }
+
+    /**
+     * Get format
+     *
+     * @return integer
+     */
+    public function getFormat()
+    {
+        return $this->format;
     }
 
     /**

@@ -56,6 +56,7 @@ class Episode extends Entity
         $episode->setAuthor($data['author']);
         $episode->setModified($this->modified);
         $episode->setHd($data['hd']);
+        $episode->setFormat($data['format']);
         $episode->setDuration($data['duration']);
         $episode->setTrash(0);
 
