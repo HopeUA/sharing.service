@@ -199,10 +199,8 @@ class EpisodeRepository extends ResourceRepository
         $selector = new ChannelSelector($episode->getCode());
         switch ($episode->getFormat()) {
             case '1080p50':
-                $preset = 'YoutubeFullHD50';
-                break;
             case '1080p25':
-                $preset = 'YoutubeFullHD25';
+                $preset = 'YoutubeFullHD';
                 break;
             case '720p50':
                 $preset = 'YoutubeHD';
