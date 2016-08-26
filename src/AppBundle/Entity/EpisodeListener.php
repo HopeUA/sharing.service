@@ -58,12 +58,8 @@ class EpisodeListener
             $mqGroup = 'fast';
             $episodeRepo->updateOnYoutube($episode, $channel, $mqGroup);
         } else {
-            $presetAlias = '';
-            if ($channelSelector->owner() == 'hoperu') {
-                $presetAlias = 'RU';
-            }
-
-            $episodeRepo->compressForYoutube($episode, $channelSelector->compressor(), 'medium', $mqGroup, $presetAlias);
+            $preset = $episodeRepo->getPreset($episode);
+            $episodeRepo->compressForYoutube($episode, $channelSelector->compressor(), 'medium', $mqGroup, $preset);
             $episodeRepo->uploadOnYoutube($episode, $channel, $mqGroup);
         }
 

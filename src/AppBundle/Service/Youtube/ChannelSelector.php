@@ -11,6 +11,7 @@ class ChannelSelector
     private $code;
     private $channel;
     private $owner;
+    private $logoStyle = 'default';
     private $compressor = 1;
 
     public function __construct($code)
@@ -29,6 +30,7 @@ class ChannelSelector
             $channel = $this->apiRequest($this->code);
             $this->channel = $channel['alias'];
             $this->owner   = $channel['owner'];
+            $this->logoStyle = $channel['logoStyle'];
         }
 
         return $this->channel;
@@ -55,6 +57,13 @@ class ChannelSelector
         $this->program();
 
         return $this->owner;
+    }
+
+    public function logo()
+    {
+        $this->program();
+
+        return $this->logoStyle;
     }
 
     private function apiRequest($code)

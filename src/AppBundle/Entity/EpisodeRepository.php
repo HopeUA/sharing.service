@@ -7,6 +7,7 @@ use AppBundle\Media\Image;
 use AppBundle\Media\Video;
 use AppBundle\Media\Source;
 use AppBundle\Service\Youtube\Template;
+use AppBundle\Service\Youtube\ChannelSelector;
 
 /**
  * EpisodeRepository
@@ -91,15 +92,10 @@ class EpisodeRepository extends ResourceRepository
      * @param string      $priority
      * @param             $mqGroup
      */
-    public function compressForYoutube(Episode $video, $compressor = 1, $priority = "medium", $mqGroup, $presetAlias = '')
+    public function compressForYoutube(Episode $video, $compressor = 1, $priority = "medium", $mqGroup, $preset)
     {
         $code        = $video->getCode();
         $programCode = $video->getProgram()->getCode();
-
-        $preset = $video->getHd() ? 'YoutubeHD' : 'YoutubeSD';
-        if ($presetAlias != '') {
-            $preset = $presetAlias . '-' . $preset;
-        }
 
         $compressorData = array(
             "input" => array(
@@ -196,5 +192,20 @@ class EpisodeRepository extends ResourceRepository
          */
         $mr = $this->getEntityManager()->getRepository('AppBundle:Message');
         $mr->publish($video->getCode(), 'YoutubeUpdateVideo', $updateData, 100, 1, $mqGroup);
+    }
+    
+    public function getPreset(Episode $episode)
+    {
+        $selector = new ChannelSelector($episode->getProgram()->getCode());
+        $preset   = $episode->getHd() ? 'YoutubeHD' : 'YoutubeSD';
+
+        if ($selector->owner() == 'hoperu') {
+            $preset = 'RU' . $preset;
+        }
+        if ($selector->logo() != 'default') {
+            $preset .= '-' . $selector->logo();
+        }
+
+        return $preset;
     }
 }
