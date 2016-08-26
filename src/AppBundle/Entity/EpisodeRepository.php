@@ -196,7 +196,7 @@ class EpisodeRepository extends ResourceRepository
     
     public function getPreset(Episode $episode)
     {
-        $selector = new ChannelSelector($episode->getProgram()->getCode());
+        $selector = new ChannelSelector($episode->getCode());
         $preset   = $episode->getHd() ? 'YoutubeHD' : 'YoutubeSD';
 
         if ($selector->owner() == 'hoperu') {
