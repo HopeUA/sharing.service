@@ -22,54 +22,6 @@ class ManualUpdateCommand extends ContainerAwareCommand
     {
         $container     = $this->getContainer();
 
-        // init config
-        $configManager = new Config($container->getParameter('kernel.root_dir') . '/config/sync.yml');
-        $config        = $configManager->load();
 
-        // Init logger
-        $logFile = $container->getParameter('kernel.root_dir') . '/logs/sync.log';
-        $logger  = new Logger('sync');
-        $logger->pushHandler(new StreamHandler($logFile, Logger::INFO));
-        $logger->pushHandler(new ConsoleHandler($output));
-
-        // Check running processes
-        if ($config['process.id'] > 0) {
-            if (file_exists('/proc/' . $config['process.id'])) {
-                $logger->warning(sprintf(
-                    'Another process (%d) is running',
-                    $config['process.id']
-                ));
-                return;
-            }
-
-            $logger->warning(sprintf(
-                'Dead process (%d). Reloading...',
-                $config['process.id']
-            ));
-        }
-
-        // Lock process
-        $config['process.id']    = getmypid();
-        $config['process.start'] = date('Y-m-d H:i:s');
-        $config['process.end']   = 0;
-        $configManager->save($config);
-
-        $em = $container->get('doctrine')->getManager();
-
-        try {
-            $sync = new Sync($em, $container->getParameter('remote.url'));
-            $sync->setLog($logger);
-            $sync->run($configManager);
-
-            $logger->info('END sync. Success...');
-        } catch (\Exception $e) {
-            $logger->error('END sync. Error...');
-        }
-
-        // Unlock process
-        $config = $configManager->load();
-        $config['process.id']  = 0;
-        $config['process.end'] = date('Y-m-d H:i:s');
-        $configManager->save($config);
     }
 }

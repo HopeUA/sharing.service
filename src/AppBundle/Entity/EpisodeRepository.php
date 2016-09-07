@@ -205,6 +205,9 @@ class EpisodeRepository extends ResourceRepository
             case '720p50':
                 $preset = 'YoutubeHD';
                 break;
+            case '576p-anamorph':
+                $preset = 'YoutubeAnamorphSD';
+                break;
             default:
                 $preset = 'YoutubeSD';
         }
