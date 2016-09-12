@@ -43,12 +43,6 @@ class ChannelSelector
      */
     public function compressor()
     {
-        $channel = $this->program();
-
-        switch ($channel) {
-            case 'morning': $this->compressor = 2; break;
-        }
-
         return $this->compressor;
     }
 
